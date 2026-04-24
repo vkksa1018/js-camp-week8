@@ -82,27 +82,37 @@ function validateOrderUser(data) {
   const errors = [];
   const { name, tel, email, address, payment } = data || {};
 
-  // name
-  if (!name || name.trim() === "") errors.push("姓名不可為空");
+  // 姓名檢查
+  if (!name || name.trim() === "") {
+    errors.push("姓名不可為空");
+  }
 
-  // tel
-  const telReg = /^09\d{8}$/;
-  if (!telReg.test(tel))
-    errors.push("電話格式不正確（需為 09 開頭之 10 位數字）");
+  // 驗證手機
+  const telRule = /^09\d{8}$/;
+  if (!telRule.test(tel)) {
+    errors.push("手機格式不正確");
+  }
 
-  // email
-  if (!email || !email.includes("@")) errors.push("Email 格式不正確");
+  // Email驗證
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || !emailRegex.test(email)) {
+    errors.push("Email 格式不正確");
+  }
 
-  // address
-  if (!address || address.trim() === "") errors.push("地址不可為空");
+  // 地址檢查
+  if (!address || address.trim() === "") {
+    errors.push("地址不可為空");
+  }
 
-  // payment
+  // 付款方式檢查
   const validPayments = ["ATM", "Credit Card", "Apple Pay"];
-  if (!validPayments.includes(payment)) errors.push("請選擇正確的支付方式");
+  if (!validPayments.includes(payment)) {
+    errors.push("付款方式不正確");
+  }
 
   return {
     isValid: errors.length === 0,
-    errors,
+    errors: errors,
   };
 }
 
@@ -118,13 +128,19 @@ function validateOrderUser(data) {
  */
 function validateCartQuantity(quantity) {
   // 請實作此函式
+  if (typeof quantity !== "number") {
+    return { isValid: false, error: "數量必須是數字格式" };
+  }
+
   if (!Number.isInteger(quantity)) {
     return { isValid: false, error: "數量必須是整數" };
   }
+
   if (quantity < 1 || quantity > 99) {
-    return { isValid: false, error: "數量必須介於 1 至 99 之間" };
+    return { isValid: false, error: "數量必須介於 1 到 99" };
   }
-  return { isValid: true };
+
+  return { isValid: true, error: "" };
 }
 
 /**
