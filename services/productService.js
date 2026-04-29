@@ -85,27 +85,25 @@ function displayProducts(products) {
   //    原價：NT$ 1,000
   //    售價：NT$ 800 (8折)
   // ----------------------------------------
-  function displayProducts(products) {
-    if (!Array.isArray(products) || products.length === 0) {
-      console.log("目前無產品資訊");
-      return;
-    }
-
-    console.log("產品列表：");
-    console.log("----------------------------------------");
-
-    products.forEach((item, index) => {
-      const discount = getDiscountRate(item);
-      const originPrice = formatCurrency(item.origin_price);
-      const price = formatCurrency(item.price);
-
-      console.log(`${index + 1}. ${item.title}`);
-      console.log(`    分類：${item.category}`);
-      console.log(`    原價：${originPrice}`);
-      console.log(`    售價：${price} (${discount})`);
-      console.log("----------------------------------------");
-    });
+  if (!Array.isArray(products) || products.length === 0) {
+    console.log("目前無產品資訊");
+    return;
   }
+
+  console.log("產品列表：");
+  console.log("----------------------------------------");
+
+  products.forEach((item, index) => {
+    const discount = getDiscountRate(item);
+    const originPrice = formatCurrency(item.origin_price);
+    const price = formatCurrency(item.price);
+
+    console.log(`${index + 1}. ${item.title}`);
+    console.log(`    分類：${item.category}`);
+    console.log(`    原價：${originPrice}`);
+    console.log(`    售價：${price} (${discount})`);
+    console.log("----------------------------------------");
+  });
 }
 
 module.exports = {
